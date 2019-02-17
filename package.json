@@ -1,0 +1,22 @@
+{
+  "name": "cakephp-user-activities-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infotechnohelp/cakephp-user-activities-client.git"
+  },
+  "author": "Infotechnohelp.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infotechnohelp/cakephp-user-activities-client/issues"
+  },
+  "homepage": "https://github.com/infotechnohelp/cakephp-user-activities-client#readme",
+  "dependencies": {
+    "jquery.fn.helper": "^1.2.0"
+  }
+}
