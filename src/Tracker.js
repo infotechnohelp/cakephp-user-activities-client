@@ -1,6 +1,13 @@
-var Tracker = function (jQueryObject) {
+
+var Tracker = function (requestId, apiClient, jQueryObject) {
     this.object = jQueryObject;
-    this.requestId = null;
+    this.requestId = requestId;
+
+    if (api instanceof Api === false) {
+        throw Error('provided `apiClient` object is not an instance of `Api` class');
+    }
+
+    this.api = apiclient;
 
     return this;
 };
@@ -13,7 +20,7 @@ Tracker.prototype.setRequestId = function (requestId) {
 
 Tracker.prototype.init = function (callback) {
     var $this = this;
-    jQuery.post('user-activities/api/user-request-activities/init', {
+    this.api.postJson('init', {
         request_id: $this.requestId,
         event_log: JSON.stringify([{
             timestamp: new Date().getTime(),
@@ -27,7 +34,7 @@ Tracker.prototype.init = function (callback) {
 
 Tracker.prototype.saveError = function (selector) {
     var $this = this;
-    jQuery.post('user-activities/api/user-request-activities/error', {
+    this.api.postJson('error', {
         request_id: $this.requestId,
         error_log: selector + ' is not present on the page',
         body_html: jQuery('body').html()
@@ -37,7 +44,6 @@ Tracker.prototype.saveError = function (selector) {
 };
 
 Tracker.prototype.isOnScreen = function (once, options) {
-
 
     if (this.object.length === 0) {
 
@@ -67,7 +73,7 @@ Tracker.prototype.isOnScreen = function (once, options) {
                 eventData.timestamp = new Date().getTime();
             }
 
-            jQuery.post('user-activities/api/user-request-activities/update', {
+            $this.api.postJson('update', {
                 request_id: $this.requestId,
                 event_log: JSON.stringify(eventData)
             }, function () {
@@ -128,7 +134,7 @@ Tracker.prototype.isClicked = function (once) {
                 timestamp: new Date().getTime()
             };
 
-            jQuery.post('user-activities/api/user-request-activities/update', {
+            $this.api.postJson('update', {
                 request_id: $this.requestId,
                 event_log: JSON.stringify(eventData)
             }, function () {
@@ -182,7 +188,7 @@ Tracker.prototype.isHovered = function (once) {
                 timestamp: new Date().getTime()
             };
 
-            jQuery.post('user-activities/api/user-request-activities/update', {
+            $this.api.postJson('update', {
                 request_id: $this.requestId,
                 event_log: JSON.stringify(eventData)
             }, function () {
@@ -210,9 +216,9 @@ Tracker.prototype.isHovered = function (once) {
 Tracker.prototype.registerLatestEvent = function (timeout) {
     var $this = this;
 
-    function registerEvent(){
+    function registerEvent() {
         setTimeout(function () {
-            jQuery.post('user-activities/api/user-request-activities/latest-event', {
+            $this.api.postJson('latest-event', {
                 request_id: $this.requestId,
                 timestamp: new Date().getTime()
             });
@@ -241,7 +247,7 @@ Tracker.prototype.registerResizeEvent = function (timeout) {
     var $this = this;
 
     jQuery(window).resizeEnd(function () {
-        jQuery.post('user-activities/api/user-request-activities/update', {
+        $this.api.postJson('update', {
             request_id: $this.requestId,
             event_log: JSON.stringify({
                 event: 'window resized',
