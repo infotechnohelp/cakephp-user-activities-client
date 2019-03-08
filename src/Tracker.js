@@ -7,7 +7,7 @@ var Tracker = function (requestId, apiClient, jQueryObject) {
         throw Error('provided `apiClient` object is not an instance of `Api` class');
     }
 
-    this.api = apiclient;
+    this.api = apiClient;
 
     return this;
 };
