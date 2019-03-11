@@ -24,8 +24,8 @@ Tracker.prototype.init = function (callback) {
         request_id: $this.requestId,
         event_log: JSON.stringify([{
             timestamp: new Date().getTime(),
-            width: jQuery(window).width(),
-            height: jQuery(window).height()
+            width: jQuery(window).outerWidth(),
+            height: jQuery(window).outerHeight()
         }])
     }, function () {
         callback();
@@ -251,8 +251,8 @@ Tracker.prototype.registerResizeEvent = function (timeout) {
             request_id: $this.requestId,
             event_log: JSON.stringify({
                 event: 'window resized',
-                width: jQuery(window).width(),
-                height: jQuery(window).height(),
+                width: jQuery(window).outerWidth(),
+                height: jQuery(window).outerHeight(),
                 timestamp: new Date().getTime()
             })
         });
